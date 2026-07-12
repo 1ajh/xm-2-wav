@@ -1,0 +1,21 @@
+# Normalise line endings so shell scripts stay LF on every platform.
+* text=auto eol=lf
+
+# Windows-native tooling keeps CRLF.
+*.ps1  text eol=crlf
+*.iss  text eol=crlf
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+
+# Scripts and packaging files that MUST be LF (they run on macOS/Linux).
+*.sh        text eol=lf
+*.desktop   text eol=lf
+PKGBUILD    text eol=lf
+.SRCINFO    text eol=lf
+
+# Binary assets — never touch.
+*.png   binary
+*.ico   binary
+*.icns  binary
+*.dll   binary
+*.wav   binary
