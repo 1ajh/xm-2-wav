@@ -5,7 +5,7 @@
 | OS | Download | Run |
 |----|----------|-----|
 | **Windows 10/11** | `XM-2-WAV.exe` (or `XM-2-WAV-Setup.exe`) | Double-click. SmartScreen may warn (unsigned) → *More info → Run anyway*. |
-| **macOS** | `XM-2-WAV.dmg` | Drag to Applications. First launch: **right-click → Open** (unsigned/un-notarised). |
+| **macOS** | `XM-2-WAV-arm64.dmg` (Apple Silicon) / `XM-2-WAV-x86_64.dmg` (Intel) | Drag to Applications. First launch: **right-click → Open** (unsigned/un-notarised). |
 | **Linux (any distro)** | `XM-2-WAV-x86_64.AppImage` | `chmod +x XM-2-WAV-x86_64.AppImage && ./XM-2-WAV-x86_64.AppImage` |
 
 ### Arch Linux (AUR)

@@ -11,6 +11,14 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."   # repo root
 
 python3 -m pip install --upgrade pyinstaller pillow numpy sounddevice >/dev/null
+
+# tkinter is a C extension shipped WITH Python, not a pip package. python.org builds bundle
+# Tcl/Tk; a Homebrew python may not. Fail fast with a clear message instead of a broken .app.
+python3 -c "import tkinter" >/dev/null 2>&1 || {
+    echo "ERROR: this Python has no tkinter. Use the python.org installer, or: brew install python-tk"
+    exit 1
+}
+
 python3 tools/make_icon.py
 
 if ! command -v brew >/dev/null 2>&1; then

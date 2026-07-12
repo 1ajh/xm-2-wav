@@ -29,12 +29,16 @@ if command -v appimagetool >/dev/null 2>&1; then
     APPIMAGETOOL=appimagetool
 else
     echo "Downloading appimagetool…"
+    # Use the AppImage/appimagetool build: its embedded runtime statically links libfuse,
+    # so the resulting AppImage runs on distros without libfuse2 (Ubuntu 22.04+, Fedora, Arch).
     curl -fsSL -o /tmp/appimagetool \
-        "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+        "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
     chmod +x /tmp/appimagetool
     APPIMAGETOOL=/tmp/appimagetool
 fi
 
-ARCH=x86_64 "${APPIMAGETOOL}" "${APPDIR}" "dist/XM-2-WAV-x86_64.AppImage"
+# APPIMAGE_EXTRACT_AND_RUN lets appimagetool (itself an AppImage) run on build hosts that
+# lack FUSE (modern CI runners), without needing libfuse2 installed.
+ARCH=x86_64 APPIMAGE_EXTRACT_AND_RUN=1 "${APPIMAGETOOL}" "${APPDIR}" "dist/XM-2-WAV-x86_64.AppImage"
 echo
 echo "Built: dist/XM-2-WAV-x86_64.AppImage"

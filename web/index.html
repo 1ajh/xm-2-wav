@@ -84,9 +84,9 @@
     </div>
     <div class="card">
       <h3><span class="os"></span> macOS</h3>
-      <p>Universal .dmg. Drag to Applications. First launch: right-click → Open.</p>
-      <a class="btn" href="https://github.com/CHANGE-ME/xm-2-wav/releases/latest/download/XM-2-WAV.dmg">Download .dmg</a>
-      <a class="btn alt" href="#macos">Install notes</a>
+      <p>Drag to Applications. First launch: right-click → Open (unsigned).</p>
+      <a class="btn" href="https://github.com/CHANGE-ME/xm-2-wav/releases/latest/download/XM-2-WAV-arm64.dmg">Apple Silicon</a>
+      <a class="btn alt" href="https://github.com/CHANGE-ME/xm-2-wav/releases/latest/download/XM-2-WAV-x86_64.dmg">Intel</a>
     </div>
     <div class="card">
       <h3><span class="os">🐧</span> Linux</h3>
@@ -131,6 +131,7 @@ pipx install xm-2-wav</code></pre>
     <p><strong>AppImage (any distro):</strong></p>
     <pre><code>chmod +x XM-2-WAV-x86_64.AppImage
 ./XM-2-WAV-x86_64.AppImage</code></pre>
+    <p>On the rare distro without FUSE, run it with <code>./XM-2-WAV-x86_64.AppImage --appimage-extract-and-run</code>.</p>
     <p><strong>Arch Linux (AUR):</strong></p>
     <pre><code>yay -S xm-2-wav        # or: paru -S xm-2-wav</code></pre>
     <p><strong>Any distro with Python (pip / pipx):</strong> install libopenmpt + Tk from your package

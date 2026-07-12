@@ -11,6 +11,14 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."   # repo root
 
 python3 -m pip install --upgrade pyinstaller pillow numpy sounddevice >/dev/null
+
+# tkinter ships with Python, not via pip. On Linux it comes from the tk / python3-tk package.
+python3 -c "import tkinter" >/dev/null 2>&1 || {
+    echo "ERROR: this Python has no tkinter. Install it, e.g.:"
+    echo "  Arch: sudo pacman -S tk   |   Debian/Ubuntu: sudo apt install python3-tk"
+    exit 1
+}
+
 python3 tools/make_icon.py
 
 LIBMPT=$(ldconfig -p 2>/dev/null | grep -oE '/[^ ]*libopenmpt\.so[^ ]*' | head -n1 || true)

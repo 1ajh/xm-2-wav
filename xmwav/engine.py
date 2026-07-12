@@ -128,18 +128,16 @@ def _load() -> ctypes.CDLL:
             os.add_dll_directory(d)
 
     last_err: Optional[Exception] = None
-    tried: List[str] = []
     for path in _candidate_paths():
         # Absolute paths that don't exist are skipped; bare names go through the OS loader.
         if os.path.isabs(path) and not os.path.exists(path):
             continue
-        tried.append(path)
         try:
             lib = ctypes.CDLL(path)
-        except OSError as exc:
+            _configure(lib)  # inside the try: an old lib missing a symbol raises AttributeError
+        except (OSError, AttributeError) as exc:
             last_err = exc
             continue
-        _configure(lib)
         _lib = lib
         return lib
 
@@ -147,10 +145,10 @@ def _load() -> ctypes.CDLL:
     for name in _lib_filenames():
         try:
             lib = ctypes.CDLL(name)
-        except OSError as exc:
+            _configure(lib)
+        except (OSError, AttributeError) as exc:
             last_err = exc
             continue
-        _configure(lib)
         _lib = lib
         return lib
 

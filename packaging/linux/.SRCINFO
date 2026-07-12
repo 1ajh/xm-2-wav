@@ -1,0 +1,20 @@
+pkgbase = xm-2-wav
+	pkgdesc = Render FastTracker II .xm modules to lossless WAV at any fixed BPM and transposition
+	pkgver = 1.2.0
+	pkgrel = 1
+	url = https://ajh.wtf
+	arch = any
+	license = MIT
+	makedepends = python-build
+	makedepends = python-installer
+	makedepends = python-setuptools
+	makedepends = python-wheel
+	depends = python
+	depends = python-numpy
+	depends = libopenmpt
+	depends = tk
+	optdepends = python-sounddevice: in-app audio preview
+	source = xm-2-wav-1.2.0.tar.gz::https://github.com/CHANGE-ME/xm-2-wav/archive/refs/tags/v1.2.0.tar.gz
+	sha256sums = SKIP
+
+pkgname = xm-2-wav

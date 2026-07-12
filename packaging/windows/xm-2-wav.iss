@@ -7,6 +7,10 @@
 #define AppVersion "1.2.0"
 
 [Setup]
+; Paths below are relative to SourceDir. A relative SourceDir resolves against this .iss
+; file's own folder (packaging\windows\), so ..\.. points at the repo root — where dist\,
+; assets\, README.md and LICENSE live. This lets ISCC be invoked from the repo root in CI.
+SourceDir=..\..
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppPublisher=ajh

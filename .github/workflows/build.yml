@@ -34,7 +34,8 @@ jobs:
         shell: pwsh
         run: |
           python -m tests.make_test_xm t.xm
-          ./dist/XM-2-WAV.exe t.xm --bpm 120 --transpose 5 --outdir out
+          # The exe is a GUI-subsystem binary, so wait for it explicitly before checking output.
+          Start-Process -FilePath ./dist/XM-2-WAV.exe -ArgumentList 't.xm','--bpm','120','--transpose','5','--outdir','out' -Wait -NoNewWindow
           if (-not (Test-Path out/*.wav)) { throw "no wav produced" }
       - uses: actions/upload-artifact@v4
         with:
@@ -43,9 +44,17 @@ jobs:
             dist/XM-2-WAV.exe
             dist/XM-2-WAV-Setup.exe
 
-  # -------------------------------------------------------------- macOS
+  # -------------------------------------------------------------- macOS (Apple Silicon + Intel)
   macos:
-    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-14   # Apple Silicon (arm64)
+            arch: arm64
+          - runner: macos-13   # Intel (x86_64)
+            arch: x86_64
+    runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -57,10 +66,12 @@ jobs:
         run: python -m pip install --upgrade numpy pillow pyinstaller sounddevice
       - name: Build .app + .dmg
         run: bash packaging/macos/build_app.sh
+      - name: Name the .dmg by architecture
+        run: mv dist/XM-2-WAV.dmg "dist/XM-2-WAV-${{ matrix.arch }}.dmg"
       - uses: actions/upload-artifact@v4
         with:
-          name: macos
-          path: dist/XM-2-WAV.dmg
+          name: macos-${{ matrix.arch }}
+          path: dist/XM-2-WAV-${{ matrix.arch }}.dmg
 
   # -------------------------------------------------------------- Linux
   linux:
