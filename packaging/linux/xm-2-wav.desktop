@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=XM-2-WAV
+GenericName=Tracker Module to WAV Renderer
+Comment=Render FastTracker II .xm modules to lossless WAV at any fixed BPM and transposition
+Exec=xm-2-wav
+Icon=xm-2-wav
+Terminal=false
+Categories=AudioVideo;Audio;AudioVideoEditing;
+MimeType=audio/x-xm;
+Keywords=xm;tracker;fasttracker;module;wav;audio;render;
+StartupNotify=true

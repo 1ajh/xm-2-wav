@@ -1,0 +1,105 @@
+name: build
+
+# Builds installable artifacts for Windows, macOS and Linux on real runners.
+# Triggered manually, on pushes to main, and on version tags (which also cut a Release).
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to create Releases on tag builds
+
+jobs:
+  # -------------------------------------------------------------- Windows
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: python -m pip install --upgrade numpy pillow pyinstaller
+      - name: Build exe
+        shell: pwsh
+        run: ./build.ps1
+      - name: Build installer (Inno Setup)
+        shell: pwsh
+        run: |
+          choco install innosetup --no-progress -y
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" packaging\windows\xm-2-wav.iss
+      - name: Smoke test the exe
+        shell: pwsh
+        run: |
+          python -m tests.make_test_xm t.xm
+          ./dist/XM-2-WAV.exe t.xm --bpm 120 --transpose 5 --outdir out
+          if (-not (Test-Path out/*.wav)) { throw "no wav produced" }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: |
+            dist/XM-2-WAV.exe
+            dist/XM-2-WAV-Setup.exe
+
+  # -------------------------------------------------------------- macOS
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install libopenmpt
+        run: brew install libopenmpt
+      - name: Install deps
+        run: python -m pip install --upgrade numpy pillow pyinstaller sounddevice
+      - name: Build .app + .dmg
+        run: bash packaging/macos/build_app.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos
+          path: dist/XM-2-WAV.dmg
+
+  # -------------------------------------------------------------- Linux
+  linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install system libs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libopenmpt0 libopenmpt-dev tk python3-tk \
+                                  portaudio19-dev libfuse2
+      - name: Install deps
+        run: python -m pip install --upgrade numpy pillow pyinstaller sounddevice build installer wheel
+      - name: Build AppImage
+        run: bash packaging/linux/build_appimage.sh
+      - name: Build wheel + sdist
+        run: python -m build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: |
+            dist/XM-2-WAV-x86_64.AppImage
+            dist/*.whl
+            dist/*.tar.gz
+
+  # -------------------------------------------------------------- Release (on tags)
+  release:
+    needs: [windows, macos, linux]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Publish Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+          generate_release_notes: true

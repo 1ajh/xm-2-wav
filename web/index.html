@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XM-2-WAV — render .xm modules to lossless WAV</title>
+<meta name="description" content="Import FastTracker II .xm modules and render them to lossless WAV at any fixed BPM and transposition. Free, open-source, for Windows, macOS and Linux.">
+<style>
+  :root{
+    --bg:#15161c; --panel:#1e1f26; --panel2:#262832; --fg:#e6e8ee; --muted:#9aa0aa;
+    --accent:#4e8cff; --accent2:#5eead4; --border:#333747; --link:#6aa6ff;
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:radial-gradient(1200px 600px at 50% -10%, #232634 0%, var(--bg) 60%);
+    color:var(--fg); font:16px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    min-height:100vh;
+  }
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+
+  header{text-align:center;padding:64px 20px 24px}
+  header img{width:104px;height:104px;border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+  h1{font-size:44px;margin:18px 0 6px;letter-spacing:.5px}
+  .tag{color:var(--muted);font-size:18px;max-width:620px;margin:0 auto}
+  .accent{color:var(--accent2)}
+
+  .downloads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0 8px}
+  @media(max-width:720px){.downloads{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--border);
+        border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:10px}
+  .card h3{margin:0;font-size:20px;display:flex;align-items:center;gap:8px}
+  .card .os{font-size:22px}
+  .card p{margin:0;color:var(--muted);font-size:14px;flex:1}
+  .btn{display:inline-block;text-align:center;background:var(--accent);color:#fff;font-weight:600;
+       padding:11px 14px;border-radius:10px;border:1px solid var(--accent)}
+  .btn:hover{background:#3f78e0;text-decoration:none}
+  .btn.alt{background:transparent;color:var(--fg);border-color:var(--border)}
+  .btn.alt:hover{background:var(--panel2)}
+  code,kbd{background:#0e0f14;border:1px solid var(--border);border-radius:6px;padding:2px 7px;
+       font-family:Consolas,"SF Mono",Menlo,monospace;font-size:13px;color:#d7dbe4}
+  pre{background:#0e0f14;border:1px solid var(--border);border-radius:10px;padding:12px 14px;overflow:auto}
+  pre code{border:0;padding:0;background:none}
+
+  .note{color:var(--muted);font-size:13px;text-align:center;margin:6px 0 0}
+
+  section{margin:52px 0}
+  h2{font-size:26px;margin:0 0 18px}
+  .features{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:620px){.features{grid-template-columns:1fr}}
+  .feat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+  .feat h4{margin:0 0 6px;font-size:16px}
+  .feat p{margin:0;color:var(--muted);font-size:14px}
+
+  .shot{width:100%;border:1px solid var(--border);border-radius:14px;box-shadow:0 16px 50px rgba(0,0,0,.5)}
+
+  .install h3{margin:22px 0 8px;font-size:18px}
+  footer{border-top:1px solid var(--border);margin-top:60px;padding:26px 20px 60px;text-align:center;color:var(--muted)}
+  footer a{font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <img src="xm2wav.png" alt="XM-2-WAV icon">
+    <h1>XM-2-WAV</h1>
+    <p class="tag">Import FastTracker II <span class="accent">.xm</span> modules and render them to
+      <span class="accent">lossless WAV</span> — at any fixed BPM and any transposition, with an
+      in-app preview so you can test transpositions before you render.</p>
+  </header>
+
+  <!-- Replace CHANGE-ME with your GitHub user (where the CI Releases are published),
+       or point these hrefs at files hosted directly on ajh.wtf. -->
+  <div class="downloads">
+    <div class="card">
+      <h3><span class="os">🪟</span> Windows</h3>
+      <p>Windows 10/11 (64-bit). Download and run — no install needed.</p>
+      <a class="btn" href="https://github.com/CHANGE-ME/xm-2-wav/releases/latest/download/XM-2-WAV.exe">Download .exe</a>
+      <a class="btn alt" href="https://github.com/CHANGE-ME/xm-2-wav/releases/latest/download/XM-2-WAV-Setup.exe">Installer</a>
+    </div>
+    <div class="card">
+      <h3><span class="os"></span> macOS</h3>
+      <p>Universal .dmg. Drag to Applications. First launch: right-click → Open.</p>
+      <a class="btn" href="https://github.com/CHANGE-ME/xm-2-wav/releases/latest/download/XM-2-WAV.dmg">Download .dmg</a>
+      <a class="btn alt" href="#macos">Install notes</a>
+    </div>
+    <div class="card">
+      <h3><span class="os">🐧</span> Linux</h3>
+      <p>AppImage runs on any distro. Arch users: install from the AUR.</p>
+      <a class="btn" href="https://github.com/CHANGE-ME/xm-2-wav/releases/latest/download/XM-2-WAV-x86_64.AppImage">Download AppImage</a>
+      <a class="btn alt" href="#linux">AUR / pip</a>
+    </div>
+  </div>
+  <p class="note">Free &amp; open-source (MIT). Rendering by <a href="https://lib.openmpt.org/">libopenmpt</a>.</p>
+
+  <section>
+    <img class="shot" src="screenshot.png" alt="XM-2-WAV screenshot">
+  </section>
+
+  <section>
+    <h2>Why it sounds right</h2>
+    <div class="features">
+      <div class="feat"><h4>Truly lossless</h4><p>Renders to 32-bit float WAV (also 24/16-bit) — no quantisation, no clipping, full dynamic range.</p></div>
+      <div class="feat"><h4>Faithful engine</h4><p>Powered by libopenmpt — the same renderer used by OpenMPT — with 8-tap sinc interpolation.</p></div>
+      <div class="feat"><h4>Fixed BPM</h4><p>Force the whole song to one constant BPM you choose. In-song tempo changes are neutralised.</p></div>
+      <div class="feat"><h4>Any transposition</h4><p>Shift by semitones the way a tracker does — no DSP pitch-shift artifacts, samples untouched.</p></div>
+      <div class="feat"><h4>Preview first</h4><p>Play a short clip at your current transpose/BPM to A/B options before rendering.</p></div>
+      <div class="feat"><h4>Batch &amp; CLI</h4><p>Queue many modules, or script it: <code>xm-2-wav song.xm --bpm 140 --transpose 3</code>.</p></div>
+    </div>
+  </section>
+
+  <section class="install">
+    <h2>Install notes</h2>
+
+    <h3 id="windows">🪟 Windows</h3>
+    <p>Double-click <code>XM-2-WAV.exe</code> — it's self-contained. Windows SmartScreen may warn about an
+      unrecognised publisher (the app is unsigned); click <em>More info → Run anyway</em>. The installer adds
+      Start-menu and desktop shortcuts.</p>
+
+    <h3 id="macos"> macOS</h3>
+    <p>Open the <code>.dmg</code> and drag <strong>XM-2-WAV</strong> to Applications. Because the app isn't
+      notarised, the first launch needs <strong>right-click → Open → Open</strong> (once). Or via Homebrew:</p>
+    <pre><code>brew install libopenmpt
+pipx install xm-2-wav</code></pre>
+
+    <h3 id="linux">🐧 Linux</h3>
+    <p><strong>AppImage (any distro):</strong></p>
+    <pre><code>chmod +x XM-2-WAV-x86_64.AppImage
+./XM-2-WAV-x86_64.AppImage</code></pre>
+    <p><strong>Arch Linux (AUR):</strong></p>
+    <pre><code>yay -S xm-2-wav        # or: paru -S xm-2-wav</code></pre>
+    <p><strong>Any distro with Python (pip / pipx):</strong> install libopenmpt + Tk from your package
+      manager first, then:</p>
+    <pre><code># Arch:          sudo pacman -S libopenmpt tk python-numpy
+# Debian/Ubuntu: sudo apt install libopenmpt0 python3-tk
+# Fedora:        sudo dnf install libopenmpt python3-tkinter
+
+pipx install "xm-2-wav[preview]"
+xm-2-wav</code></pre>
+  </section>
+
+  <footer>
+    Developed by <a href="https://ajh.wtf">ajh</a> · <a href="https://ajh.wtf">ajh.wtf</a><br>
+    XM-2-WAV is MIT-licensed. libopenmpt is BSD-licensed.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Runtime
+numpy>=1.22
+# Audio preview on macOS/Linux (Windows uses the stdlib winsound; optional elsewhere)
+sounddevice>=0.4 ; sys_platform != "win32"
+
+# Build tooling (for producing the downloadable apps)
+pyinstaller>=6.0
+pillow>=9            # icon generation (tools/make_icon.py)
+build>=1.0          # wheel / sdist
+
+# tkinter ships with the standard CPython installer on Windows/macOS.
+# On Linux install it from your package manager (python3-tk / tk).
+# libopenmpt: bundled on Windows (xmwav/libs), system package on macOS/Linux.

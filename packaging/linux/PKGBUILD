@@ -1,0 +1,43 @@
+# Maintainer: ajh <https://ajh.wtf>
+#
+# Arch Linux / AUR package for XM-2-WAV.
+# Before publishing to the AUR:
+#   1. Set `source` to your real release tarball (GitHub release or your own host).
+#   2. Replace the sha256sums 'SKIP' with real checksums (`updpkgsums`).
+#   3. Regenerate .SRCINFO:  `makepkg --printsrcinfo > .SRCINFO`
+#
+# Local test build (from the repo root):
+#   cd packaging/linux && makepkg -si
+
+pkgname=xm-2-wav
+pkgver=1.2.0
+pkgrel=1
+pkgdesc="Render FastTracker II .xm modules to lossless WAV at any fixed BPM and transposition"
+arch=('any')
+url="https://ajh.wtf"
+license=('MIT')
+depends=('python' 'python-numpy' 'libopenmpt' 'tk')
+optdepends=('python-sounddevice: in-app audio preview')
+makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/CHANGE-ME/xm-2-wav/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+    cd "$srcdir/xm-2-wav-$pkgver"
+    python -m build --wheel --no-isolation
+}
+
+package() {
+    cd "$srcdir/xm-2-wav-$pkgver"
+    python -m installer --destdir="$pkgdir" dist/*.whl
+
+    install -Dm644 packaging/linux/xm-2-wav.desktop \
+        "$pkgdir/usr/share/applications/xm-2-wav.desktop"
+    install -Dm644 assets/xm2wav.png \
+        "$pkgdir/usr/share/icons/hicolor/512x512/apps/xm-2-wav.png"
+    install -Dm644 assets/xm2wav-256.png \
+        "$pkgdir/usr/share/icons/hicolor/256x256/apps/xm-2-wav.png"
+    install -Dm644 assets/xm2wav-128.png \
+        "$pkgdir/usr/share/icons/hicolor/128x128/apps/xm-2-wav.png"
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

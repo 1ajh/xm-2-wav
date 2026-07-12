@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.eggs/
+
+# Build outputs (produced locally or by CI; distributed via Releases, not committed)
+build/
+dist/
+build_check/
+*.spec
+*.AppImage
+*.dmg
+*.whl
+*.tar.gz
+
+# Test scratch
+tests/_*
+
+# Note: xmwav/libs/*.dll (bundled libopenmpt for Windows) and assets/ ARE tracked.

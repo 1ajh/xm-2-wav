@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xm-2-wav"
+version = "1.2.0"
+description = "Render FastTracker II .xm modules to lossless WAV at any fixed BPM and transposition."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "ajh" }]
+keywords = ["xm", "fasttracker", "module", "tracker", "wav", "libopenmpt", "audio", "chiptune"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: X11 Applications",
+    "Environment :: Win32 (MS Windows)",
+    "Environment :: MacOS X",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Sound/Audio :: Conversion",
+]
+dependencies = ["numpy>=1.22"]
+
+[project.optional-dependencies]
+preview = ["sounddevice>=0.4"]      # cross-platform audio preview (PortAudio) on macOS/Linux
+build = ["pyinstaller>=6.0", "pillow>=9"]
+
+[project.urls]
+Homepage = "https://ajh.wtf"
+
+[project.gui-scripts]
+xm-2-wav = "xmwav.cli:main"
+
+[project.scripts]
+xm-2-wav-cli = "xmwav.cli:main"
+
+[tool.setuptools]
+packages = ["xmwav"]
+
+[tool.setuptools.package-data]
+xmwav = ["assets/*.png", "assets/*.ico", "libs/*.dll", "libs/*.txt"]
