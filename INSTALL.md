@@ -77,9 +77,7 @@ python -m build          # -> dist/*.whl and dist/*.tar.gz
 
 ### Publishing
 
-- **Website:** upload the `web/` folder to your host (it's a static page). Point the
-  download buttons in `web/index.html` at your release files.
 - **GitHub Releases:** push a tag `vX.Y.Z`; the CI builds all platforms and attaches them
-  to a Release automatically.
+  to a Release automatically. Link downloads to `…/releases/latest/download/<file>`.
 - **AUR:** update `source`/`sha256sums` in `packaging/linux/PKGBUILD`, run
   `makepkg --printsrcinfo > .SRCINFO`, and push to the AUR.
