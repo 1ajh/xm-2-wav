@@ -30,6 +30,7 @@ build = ["pyinstaller>=6.0", "pillow>=9"]
 
 [project.urls]
 Homepage = "https://ajh.wtf"
+Repository = "https://github.com/1ajh/xm-2-wav"
 
 [project.gui-scripts]
 xm-2-wav = "xmwav.cli:main"

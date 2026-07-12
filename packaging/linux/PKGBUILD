@@ -19,7 +19,7 @@ license=('MIT')
 depends=('python' 'python-numpy' 'libopenmpt' 'tk')
 optdepends=('python-sounddevice: in-app audio preview')
 makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/CHANGE-ME/xm-2-wav/archive/refs/tags/v$pkgver.tar.gz")
+source=("$pkgname-$pkgver.tar.gz::https://github.com/1ajh/xm-2-wav/archive/refs/tags/v$pkgver.tar.gz")
 sha256sums=('SKIP')
 
 build() {

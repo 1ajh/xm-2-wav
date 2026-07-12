@@ -14,7 +14,7 @@ pkgbase = xm-2-wav
 	depends = libopenmpt
 	depends = tk
 	optdepends = python-sounddevice: in-app audio preview
-	source = xm-2-wav-1.2.0.tar.gz::https://github.com/CHANGE-ME/xm-2-wav/archive/refs/tags/v1.2.0.tar.gz
+	source = xm-2-wav-1.2.0.tar.gz::https://github.com/1ajh/xm-2-wav/archive/refs/tags/v1.2.0.tar.gz
 	sha256sums = SKIP
 
 pkgname = xm-2-wav
