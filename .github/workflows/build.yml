@@ -1,10 +1,9 @@
 name: build
 
-# Builds installable artifacts for Windows, macOS and Linux on real runners.
-# Triggered manually, on pushes to main, and on version tags (which also cut a Release).
+# Builds installable artifacts for Windows, macOS and Linux on real runners, and cuts a
+# GitHub Release on version tags. Runs on tags and manual dispatch (not on every push).
 on:
   push:
-    branches: [main]
     tags: ["v*"]
   workflow_dispatch:
 
@@ -15,6 +14,7 @@ jobs:
   # -------------------------------------------------------------- Windows
   windows:
     runs-on: windows-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -44,17 +44,12 @@ jobs:
             dist/XM-2-WAV.exe
             dist/XM-2-WAV-Setup.exe
 
-  # -------------------------------------------------------------- macOS (Apple Silicon + Intel)
+  # -------------------------------------------------------------- macOS (Apple Silicon)
+  # Intel Macs are served by the pip/pipx path (GitHub's Intel runners are being retired);
+  # see INSTALL.md. Add a `macos-13` job here if you have a reliable Intel runner.
   macos:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - runner: macos-14   # Apple Silicon (arm64)
-            arch: arm64
-          - runner: macos-13   # Intel (x86_64)
-            arch: x86_64
-    runs-on: ${{ matrix.runner }}
+    runs-on: macos-14
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -66,16 +61,17 @@ jobs:
         run: python -m pip install --upgrade numpy pillow pyinstaller sounddevice
       - name: Build .app + .dmg
         run: bash packaging/macos/build_app.sh
-      - name: Name the .dmg by architecture
-        run: mv dist/XM-2-WAV.dmg "dist/XM-2-WAV-${{ matrix.arch }}.dmg"
+      - name: Name the .dmg (Apple Silicon)
+        run: mv dist/XM-2-WAV.dmg dist/XM-2-WAV-arm64.dmg
       - uses: actions/upload-artifact@v4
         with:
-          name: macos-${{ matrix.arch }}
-          path: dist/XM-2-WAV-${{ matrix.arch }}.dmg
+          name: macos-arm64
+          path: dist/XM-2-WAV-arm64.dmg
 
   # -------------------------------------------------------------- Linux
   linux:
     runs-on: ubuntu-22.04
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -105,6 +101,7 @@ jobs:
     needs: [windows, macos, linux]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -120,10 +117,11 @@ jobs:
             ### Downloads
             | Platform | File |
             |----------|------|
-            | 🪟 Windows 10/11 | `XM-2-WAV.exe` (portable) · `XM-2-WAV-Setup.exe` (installer) |
-            |  macOS (Apple Silicon) | `XM-2-WAV-arm64.dmg` |
-            |  macOS (Intel) | `XM-2-WAV-x86_64.dmg` |
-            | 🐧 Linux (any distro) | `XM-2-WAV-x86_64.AppImage` |
-            | 🐍 Any OS (pip) | `*.whl` — `pipx install "xm-2-wav[preview]"` |
+            | Windows 10/11 | `XM-2-WAV.exe` (portable) · `XM-2-WAV-Setup.exe` (installer) |
+            | macOS (Apple Silicon) | `XM-2-WAV-arm64.dmg` |
+            | Linux (any distro) | `XM-2-WAV-x86_64.AppImage` |
+            | Any OS via pip | `pipx install "xm-2-wav[preview]"` (Intel Mac: `brew install libopenmpt` first) |
 
-            macOS is unsigned: first launch is **right-click → Open**. See the [README](https://github.com/1ajh/xm-2-wav#readme) and [INSTALL.md](https://github.com/1ajh/xm-2-wav/blob/main/INSTALL.md) for details.
+            macOS is unsigned: first launch is **right-click → Open**. See the
+            [README](https://github.com/1ajh/xm-2-wav#readme) and
+            [INSTALL.md](https://github.com/1ajh/xm-2-wav/blob/main/INSTALL.md).
