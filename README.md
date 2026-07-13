@@ -122,4 +122,4 @@ the duration.
 Developed by **1ajh** ([ajh.wtf](https://ajh.wtf)), built with **Claude** (Anthropic).
 
 Rendering by [libopenmpt](https://lib.openmpt.org/) (BSD license; see
-`vendor/LICENSE.libopenmpt.txt`).
+`xmwav/libs/LICENSE.libopenmpt.txt` and [NOTICE](NOTICE)).

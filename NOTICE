@@ -1,0 +1,12 @@
+XM-2-WAV
+Copyright (c) 2026 1ajh (https://ajh.wtf)
+Licensed under the MIT License (see LICENSE).
+
+Built with Claude (Anthropic).
+
+Third-party components
+----------------------
+Audio rendering is provided by libopenmpt (https://lib.openmpt.org/), which is
+distributed under the BSD 3-Clause license. On Windows the libopenmpt DLLs are
+bundled in xmwav/libs/; their license text is in xmwav/libs/LICENSE.libopenmpt.txt.
+On macOS and Linux libopenmpt is used from the system package.
