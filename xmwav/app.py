@@ -203,11 +203,12 @@ class App(tk.Tk):
         footer = ttk.Frame(self.root_frame)
         footer.grid(row=7, column=0, sticky="ew", padx=8, pady=(2, 0))
         footer.columnconfigure(0, weight=1)
-        ttk.Label(footer, text="Developed by ajh", style="Muted.TLabel").grid(row=0, column=0, sticky="e")
-        self.link = ttk.Label(footer, text=" ajh.wtf", style="Link.TLabel", cursor="hand2")
-        self.link.grid(row=0, column=1, sticky="e")
+        ttk.Label(footer, text="Developed by ", style="Muted.TLabel").grid(row=0, column=1, sticky="e")
+        self.link = ttk.Label(footer, text="1ajh", style="Link.TLabel", cursor="hand2")
+        self.link.grid(row=0, column=2, sticky="e")
         self.link.configure(font=tkfont.Font(family="Segoe UI", size=9, underline=True))
         self.link.bind("<Button-1>", lambda e: webbrowser.open(CREDIT_URL))
+        ttk.Label(footer, text="   ·   built with Claude", style="Muted.TLabel").grid(row=0, column=3, sticky="e")
 
         self._sync_bpm_state()
 

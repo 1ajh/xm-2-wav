@@ -114,3 +114,16 @@ jobs:
         with:
           files: artifacts/**/*
           generate_release_notes: true
+          body: |
+            **XM-2-WAV** — render FastTracker II `.xm` modules to lossless WAV at any fixed BPM and transposition.
+
+            ### Downloads
+            | Platform | File |
+            |----------|------|
+            | 🪟 Windows 10/11 | `XM-2-WAV.exe` (portable) · `XM-2-WAV-Setup.exe` (installer) |
+            |  macOS (Apple Silicon) | `XM-2-WAV-arm64.dmg` |
+            |  macOS (Intel) | `XM-2-WAV-x86_64.dmg` |
+            | 🐧 Linux (any distro) | `XM-2-WAV-x86_64.AppImage` |
+            | 🐍 Any OS (pip) | `*.whl` — `pipx install "xm-2-wav[preview]"` |
+
+            macOS is unsigned: first launch is **right-click → Open**. See the [README](https://github.com/1ajh/xm-2-wav#readme) and [INSTALL.md](https://github.com/1ajh/xm-2-wav/blob/main/INSTALL.md) for details.

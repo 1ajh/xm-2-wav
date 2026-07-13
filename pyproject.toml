@@ -9,7 +9,7 @@ description = "Render FastTracker II .xm modules to lossless WAV at any fixed BP
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
-authors = [{ name = "ajh" }]
+authors = [{ name = "1ajh" }]
 keywords = ["xm", "fasttracker", "module", "tracker", "wav", "libopenmpt", "audio", "chiptune"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",

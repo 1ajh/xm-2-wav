@@ -119,7 +119,7 @@ the duration.
 
 ## Credits
 
-Developed by **ajh** — <https://ajh.wtf>
+Developed by **1ajh** ([ajh.wtf](https://ajh.wtf)), built with **Claude** (Anthropic).
 
 Rendering by [libopenmpt](https://lib.openmpt.org/) (BSD license; see
 `vendor/LICENSE.libopenmpt.txt`).
